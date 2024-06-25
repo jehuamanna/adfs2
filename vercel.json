@@ -17,7 +17,11 @@
         },
         {
 
-            "src": "/auth(?<token>[^/]*)" , "dest": "server.js?code=$token"
+            "src": "/auth" , "dest": "server.js"
+        },
+        {
+
+            "src": "/redirect(?<token>[^/]*)" , "dest": "server.js?code=$token"
         },
         {
 

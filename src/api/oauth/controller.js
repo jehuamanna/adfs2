@@ -4,7 +4,7 @@ const ExpressError = require('utils/expressError');
 const oauth = (req, res, next) => {
   try {
 
-    logger.info('Called OAuth endpoint');
+    logger.info('Called OAuth home endpoint');
     res.send('oauth home')
     return res.sendStatus(200);
   } catch (error) {
@@ -13,14 +13,12 @@ const oauth = (req, res, next) => {
   }
 };
 
-const oauthAuth = (req, res, next) => {
+const oauthRedirect = (req, res, next) => {
   try {
 
-    logger.info('Called OAuth endpoint');
+    logger.info('Called auth endpoint');
 
-    const Empcode = parseJwt(token).Empcode
-    console.log(Empcode)
-    console.log(req.user)
+   
     const html_ = `
         <div id="output"> </div>
         <script>
@@ -33,7 +31,7 @@ const oauthAuth = (req, res, next) => {
             window.opener.postMessage(token, "https://frplus-dev.dtdc.com");
             window.opener.postMessage(token, "https://dev-frplus.dtdc.com");
             window.close();
-            console.log(token);
+            console.log("closing", token);
         }
 
         const url = new URL(window.location.href);
@@ -42,11 +40,11 @@ const oauthAuth = (req, res, next) => {
         const params = new URLSearchParams(url.search);
     
         // Get specific parameters
-        const param = params.get('code');
+        const param = params.get('token');
     
         // Send the token to the parent window
         sendTokenToParent(param);
-        console.log(token);
+        console.log(param);
     
         // Output the parameters
         document.getElementById('output').innerHTML = \`
@@ -62,7 +60,24 @@ const oauthAuth = (req, res, next) => {
   }
 };
 
+const oauthAuth = (req, res, next) => {
+  try {
+
+    logger.info('Called Redirect endpoint');
+
+    const Empcode = parseJwt(token).Empcode
+    console.log(Empcode)
+    console.log(req.user)
+    return res.redirect("/redirect?token="+req.user)
+  } catch (error) {
+
+    return res.send(error)
+  }
+};
+
+
 module.exports = {
   oauth,
-  oauthAuth
+  oauthAuth,
+  oauthRedirect
 };
