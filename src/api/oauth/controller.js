@@ -9,7 +9,7 @@ const oauth = (req, res, next) => {
     return res.sendStatus(200);
   } catch (error) {
 
-    new ExpressError();
+    return res.send(error)
   }
 };
 
@@ -58,7 +58,7 @@ const oauthAuth = (req, res, next) => {
     res.sendStatus(200)
   } catch (error) {
 
-    next(new ExpressError());
+    return res.send(error)
   }
 };
 
