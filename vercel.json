@@ -52,7 +52,20 @@
             "src": "/getAuthToken/(?<Empcode>[^/]*)" , "dest": "server.js?Empcode=$Empcode"
         },{
 
-            "src": "/auth-service/api/health-check" , "dest": "server.js"
+            "src": "/api/health-check" , "dest": "server.js"
+        },{
+
+            "src": "/api/auth/" , "dest": "server.js"
+        },{
+
+            "src": "/api/auth/login" , "dest": "server.js"
+        },{
+
+            "src": "/api/auth/auth" , "dest": "server.js"
+        },
+        {
+
+            "src": "/api/auth/dashboard" , "dest": "server.js"
         }
     ]
   }
