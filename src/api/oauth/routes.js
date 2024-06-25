@@ -1,5 +1,5 @@
 const oauthRouter = require('express').Router();
-const { oauth, oauthAuth } = require('./controller');
+const { oauth, oauthAuth, oauthRedirect } = require('./controller');
 const {passport} = require("../../middlewares/passport")
 
 oauthRouter.get('/', oauth);
