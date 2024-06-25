@@ -4,7 +4,7 @@ const apiBaseRouter = require('express').Router();
 
 // Exposed endpoints
 apiBaseRouter.use('/health-check', healthCheckRouter);
-apiBaseRouter.use('/auth', oauthRouter);
+apiBaseRouter.use('/', oauthRouter);
 
 
 module.exports = apiBaseRouter;
