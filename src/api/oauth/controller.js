@@ -68,6 +68,7 @@ const oauthAuth = (req, res, next) => {
     const Empcode = parseJwt(token).Empcode
     console.log(Empcode)
     console.log(req.user)
+    res.send("Authenticated")
     res.redirect("/redirect?token="+req.user)
   } catch (error) {
 
