@@ -17,7 +17,6 @@ const oauth = (req, res, next) => {
 
     logger.info('Called OAuth home endpoint');
     res.send('oauth home')
-    return res.sendStatus(200);
   } catch (error) {
     console.log(error)
     return res.send(error)
@@ -64,7 +63,6 @@ const oauthRedirect = (req, res, next) => {
         </script>
     `
     res.send(html_)
-    res.sendStatus(200)
   } catch (error) {
     console.log(error)
     return res.send(error)
@@ -79,7 +77,6 @@ const oauthAuth = (req, res, next) => {
     const Empcode = parseJwt(token).Empcode
     console.log(Empcode)
     console.log(req.user)
-    res.send("Authenticated")
     res.redirect("/redirect?token="+req.user)
   } catch (error) {
     console.log(error)
