@@ -53,6 +53,9 @@ app.use(`${baseURL}/api-docs`, apiSpecRouter);
 
 // API base URL
 app.use(`${baseURL}/api`, apiBaseRouter);
+app.get("/", function(req, res) {
+  res.send("Hello World")
+})
 
 
 // Error handler
