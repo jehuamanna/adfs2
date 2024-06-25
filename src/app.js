@@ -1,9 +1,6 @@
-const expressContext = require('@niveus/express-context');
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const helmet = require('helmet');
-const { expressReqid } = require('@niveus/express-reqid');
 const errorHandler = require('middlewares/errorHandler');
 const apiSpecRouter = require('./apispec/routes');
 const apiBaseRouter = require('./api/apiBaseRouter');
@@ -11,27 +8,18 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser')
 const {passport} = require("./middlewares/passport");
 const bodyParser = require('body-parser')
-
+const { oauth, oauthAuth, oauthRedirect } = require('./api/oauth/controller');
 const baseURL = process.env.SERVICE_BASE_URL || '/';
 
 const app = express();
-app.disable('x-powered-by'); // Disable x-powered-by header in response.
 
 // Security middlewares
-app.use(helmet({
-  contentSecurityPolicy: false // Disable CSP
-}));
 
 
-// CORS config
-const corsOptions = {
-  origin: 'http://localhost:1234', // Replace with relevant domains.
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
+
 
 // Common Middlewares
-app.use(express.json());
-app.use(cors(corsOptions));
+app.use(cors());
 
 
 const https = require('https');
@@ -69,11 +57,12 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use(bodyParser.json()); app.use(bodyParser.urlencoded({ extended: true }));
 
-// API docs
-app.use(`${baseURL}/api-docs`, apiSpecRouter);
+// app.use(`/`, apiBaseRouter);
 
-// API base URL
-app.use(`/`, apiBaseRouter);
+app.get('/', oauth);
+app.get("/login", passport.authenticate('oauth2'))
+app.get("/auth", passport.authenticate('oauth2'), oauthAuth )
+app.get("/redirect", oauthRedirect )
 
 // Error handler
 app.use(errorHandler);
