@@ -71,7 +71,7 @@ const oauthAuth = (req, res, next) => {
     res.send("Authenticated")
     res.redirect("/redirect?token="+req.user)
   } catch (error) {
-
+    console.log(error)
     return res.send(error)
   }
 };

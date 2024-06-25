@@ -30,7 +30,7 @@ const corsOptions = {
 };
 
 // Common Middlewares
-// app.use(express.json());
+app.use(express.json());
 app.use(cors(corsOptions));
 
 
