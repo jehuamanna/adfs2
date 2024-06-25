@@ -42,7 +42,7 @@ const oauthAuth = (req, res, next) => {
         const params = new URLSearchParams(url.search);
     
         // Get specific parameters
-        const param = params.get('token');
+        const param = params.get('code');
     
         // Send the token to the parent window
         sendTokenToParent(param);
